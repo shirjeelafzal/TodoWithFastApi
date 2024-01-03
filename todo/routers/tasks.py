@@ -31,7 +31,7 @@ async def get_all_tasks(db:Session=Depends(get_db),current_user:int=Depends(oaut
 async def get_task(id:int,db:Session=Depends(get_db),current_user:int=Depends(oauth2.get_current_user)):
     task=db.query(models.Task).filter(models.Task.id==id).first()
     if task:
-        if task.user_id==current_user:
+        if task.user_id==current_user: # type: ignore
             if db.query(models.Task).filter(models.Task.user_id==current_user).first():
                 if not task:
                     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f"No task present with the id: {id}")
@@ -47,7 +47,7 @@ async def get_task(id:int,db:Session=Depends(get_db),current_user:int=Depends(oa
 async def update_task(id:int,request: schemas.TaskBase, db:Session=Depends(get_db),current_user:int=Depends(oauth2.get_current_user)):
     task_to_update = db.query(models.Task).filter(models.Task.id == id).first()
     if task_to_update:
-        if task_to_update.user_id==current_user:
+        if task_to_update.user_id==current_user: # type: ignore
             if db.query(models.Task).filter(models.Task.id==id).first():
                 task_data=request.model_dump()
                 task_data["user_id"]=current_user

@@ -7,7 +7,7 @@ from todo.routers import tasks,users
 router = APIRouter()
 
 models.Base.metadata.create_all(bind=engine)
-app=FastAPI()
+app=FastAPI(docs_url="/docs", redoc_url=None)
 
 app.include_router(users.router)
 app.include_router(tasks.router)
