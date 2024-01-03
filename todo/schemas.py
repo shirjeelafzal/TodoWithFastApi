@@ -1,15 +1,21 @@
 from pydantic import BaseModel, EmailStr
+from enum import Enum
+
+class Status(str,Enum):
+    pending = 'pending'
+    completed = 'completed'
+
 
 class TaskBase(BaseModel):
     description: str
-    status: str
-    user_id:int
+    status: Status
 
     class Config:
+        use_enum_values = True
         from_attributes = True
-
 class TaskOut(TaskBase):
     id:int
+    user_id:int
 
 
 class UserBase(BaseModel):
