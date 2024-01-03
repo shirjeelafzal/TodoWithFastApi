@@ -6,8 +6,8 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    username=Column(String, index=True)
-    email = Column(String, index=True)
+    username=Column(String, index=True,unique=True)
+    email = Column(String, index=True,unique=True)
     password = Column(String)
 
     tasks = relationship("Task", back_populates="creator")
