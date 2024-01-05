@@ -1,7 +1,7 @@
 from fastapi import Depends, FastAPI,APIRouter
 
 #import models
-from .middleware import UserAuthenticationMiddleware
+from .middleware import UserAuthenticationMiddleware,LoggingMiddleware
 from . import  models
 from .database import engine
 
@@ -11,6 +11,7 @@ router = APIRouter()
 models.Base.metadata.create_all(bind=engine)
 app=FastAPI(docs_url="/docs", redoc_url=None)
 app.add_middleware(UserAuthenticationMiddleware)
+app.add_middleware(LoggingMiddleware)
 
 app.include_router(users.router)
 app.include_router(tasks.router)

@@ -54,6 +54,7 @@ async def get_all_users(db:Session=Depends(get_db)):
 @router.get("/{id}",tags=["Users"],response_model=schemas.UserOut,status_code=status.HTTP_200_OK)
 async def get_user(id:int,request:Request,token:Annotated[str, Depends(oauth2_scheme)],db:Session=Depends(get_db)):
     current_user=request.state.user_id
+    print("assasasa",db)
     user=db.query(models.User).filter(models.User.id==id).first()
     
     if user:

@@ -1,5 +1,5 @@
 from .database import Base
-from sqlalchemy import  Column, ForeignKey, Integer, String
+from sqlalchemy import  Column, ForeignKey, Integer, String,JSON
 from sqlalchemy.orm import relationship
 
 class User(Base):
@@ -20,3 +20,14 @@ class Task(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
 
     creator= relationship("User", back_populates="tasks")
+    
+    
+class Log_data(Base):
+    __tablename__ = 'log_data'
+
+    id = Column(Integer, primary_key=True, index=True)
+    request_method = Column(String)
+    request_headers = Column(JSON)  # Change this to JSON or another suitable type
+    request_url = Column(String)
+    response_status_code = Column(Integer)
+    response_headers = Column(JSON)  # Change this to JSON or another suitable type
